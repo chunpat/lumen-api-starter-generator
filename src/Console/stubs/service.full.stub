@@ -1,0 +1,74 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Contracts\Repositories\DummyClassRepository;
+use App\Repositories\Criteria\DummyClassCriteria;
+use App\Repositories\Eloquent\DummyClassRepositoryEloquent;
+use App\Repositories\Presenters\DummyClassPresenter;
+use Illuminate\Http\Request;
+
+class DummyClassService
+{
+    /**
+     * @var DummyClassRepository|DummyClassRepositoryEloquent
+     */
+    private $DummyLowercaseClassRepository;
+
+    /**
+     * DummyClassService constructor.
+     *
+     * @param DummyClassRepository $DummyLowercaseClassRepository
+     */
+    public function __construct(DummyClassRepository $DummyLowercaseClassRepository)
+    {
+        $this->DummyLowercaseClassRepository = $DummyLowercaseClassRepository;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+     */
+    public function handleList(Request $request)
+    {
+        $this->DummyLowercaseClassRepository->pushCriteria(new DummyClassCriteria($request));
+        $this->DummyLowercaseClassRepository->setPresenter(DummyClassPresenter::class);
+
+        return $this->DummyLowercaseClassRepository->searchDummyClasssByPage();
+    }
+
+    /**
+     * @param $id
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function handleProfile($id)
+    {
+        $this->DummyLowercaseClassRepository->setPresenter(DummyClassPresenter::class);
+        return $this->DummyLowercaseClassRepository->searchDummyClassBy($id);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function handleStore(Request $request)
+    {
+        $DummyLowercaseClass = $this->DummyLowercaseClassRepository->create($request->all());
+        return $DummyLowercaseClass;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function handleUpdate(Request $request)
+    {
+        $DummyLowercaseClass = $this->DummyLowercaseClassRepository->update($request->all(),$request->get('id'));
+        return $DummyLowercaseClass;
+    }
+}

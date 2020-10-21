@@ -1,0 +1,83 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Http\Resources\DummyClassResource;
+use Illuminate\Http\Request;
+use App\Services\DummyClassService;
+
+class DummyClassController extends Controller
+{
+    /**
+    * @var DummyClassService
+    */
+    private $DummyLowercaseClassService;
+
+    /**
+     * DummyClassController constructor.
+     *
+     * @param DummyClassService   $DummyLowercaseClassService
+     */
+    public function __construct(DummyClassService $DummyLowercaseClassService)
+    {
+        $this->DummyLowercaseClassService = $DummyLowercaseClassService;
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\JsonResource
+     */
+    public function index(Request $request)
+    {
+        $DummyLowercaseClasss = $this->DummyLowercaseClassService->handleList($request);
+        return $this->response->success($DummyLowercaseClasss);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\JsonResource
+     */
+    public function store(Request $request)
+    {
+        $DummyLowercaseClass = $this->$DummyLowercaseClassService->handleStore($request);
+        return $this->response->created(new DummyClassResource($DummyLowercaseClass));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\JsonResource
+     */
+    public function show($id)
+    {
+        $DummyLowercaseClass = $this->$DummyLowercaseClassService->handleProfile($id);
+        return $this->response->success($DummyLowercaseClass);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\JsonResource
+     */
+    public function update(Request $request)
+    {
+        $DummyLowercaseClass = $this->$DummyLowercaseClassService->handleUpdate($request);
+        return $this->response->success(new DummyClassResource($DummyLowercaseClass));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
