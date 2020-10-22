@@ -1,0 +1,64 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Contracts\Repositories\DummyClassRepository;
+use App\Repositories\Models\DummyClass;
+use App\Repositories\Validators\DummyClassValidator;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
+
+class DummyClassRepositoryEloquent extends BaseRepository implements DummyClassRepository
+{
+    protected $fieldSearchable = [
+        // 'name' => 'like', Default Condition "="
+    ];
+
+    /**
+     * Specify Model class name.
+     *
+     * @return string
+     */
+    public function model()
+    {
+        return DummyClass::class;
+    }
+
+    /**
+     * Specify Validator class name.
+     *
+     * @return mixed
+     */
+    public function validator()
+    {
+       return DummyClassValidator::class;
+    }
+
+    /**
+     * Boot up the repository, pushing criteria.
+     *
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
+    */
+    public function boot()
+    {
+        $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function searchDummyClasssByPage()
+    {
+        return $this->paginate(10);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function searchDummyClassBy($id)
+    {
+        return $this->find($id);
+    }
+}

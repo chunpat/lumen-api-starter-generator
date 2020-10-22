@@ -28,6 +28,7 @@ class DummyClassController extends Controller
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\JsonResource
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
     public function index(Request $request)
     {
@@ -40,10 +41,11 @@ class DummyClassController extends Controller
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\JsonResource
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(Request $request)
     {
-        $DummyLowercaseClass = $this->$DummyLowercaseClassService->handleStore($request);
+        $DummyLowercaseClass = $this->DummyLowercaseClassService->handleStore($request);
         return $this->response->created(new DummyClassResource($DummyLowercaseClass));
     }
 
@@ -55,7 +57,7 @@ class DummyClassController extends Controller
      */
     public function show($id)
     {
-        $DummyLowercaseClass = $this->$DummyLowercaseClassService->handleProfile($id);
+        $DummyLowercaseClass = $this->DummyLowercaseClassService->handleProfile($id);
         return $this->response->success($DummyLowercaseClass);
     }
 
@@ -64,10 +66,11 @@ class DummyClassController extends Controller
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\JsonResource
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update(Request $request)
     {
-        $DummyLowercaseClass = $this->$DummyLowercaseClassService->handleUpdate($request);
+        $DummyLowercaseClass = $this->DummyLowercaseClassService->handleUpdate($request);
         return $this->response->success(new DummyClassResource($DummyLowercaseClass));
     }
 

@@ -49,9 +49,10 @@ class ResourceMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return $this->collection()
-                    ? __DIR__.'/stubs/resource-collection.stub'
-                    : __DIR__.'/stubs/resource.stub';
+        $stub = $this->option('all') ? __DIR__.'/stubs/resource.whole.stub' : ($this->collection()
+            ? __DIR__.'/stubs/resource-collection.stub'
+            : __DIR__.'/stubs/resource.stub');
+        return $stub;
     }
 
     /**
@@ -84,6 +85,7 @@ class ResourceMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
+            ['all', 'a', InputOption::VALUE_NONE, 'Create a resource collection.'],
             ['collection', 'c', InputOption::VALUE_NONE, 'Create a resource collection.'],
         ];
     }

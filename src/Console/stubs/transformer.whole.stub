@@ -1,0 +1,23 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Repositories\Models\DummyClass;
+use League\Fractal\TransformerAbstract;
+
+class DummyClassTransformer extends TransformerAbstract
+{
+   /**
+    * Prepare data to present.
+    *
+    * @param DummyClass $DummyLowercaseClass
+    * @return array
+    */
+    public function transform(DummyClass $DummyLowercaseClass)
+    {
+        return [
+            'id' => $DummyLowercaseClass->id,
+            'created_at' => $DummyLowercaseClass->created_at ? $DummyLowercaseClass->created_at->format('Y-m-d H:i:s') : null,
+        ];
+    }
+}

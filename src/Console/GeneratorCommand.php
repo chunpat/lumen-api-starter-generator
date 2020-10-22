@@ -142,6 +142,27 @@ abstract class GeneratorCommand extends Command
         if ($this->type == 'Service') {
             return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Service' . '.php';
         }
+        if ($this->type == 'Resource') {
+            return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Resource' . '.php';
+        }
+        if ($this->type == 'Criteria') {
+            return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Criteria' . '.php';
+        }
+        if ($this->type == 'Eloquent') {
+            return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'RepositoryEloquent' . '.php';
+        }
+        if ($this->type == 'Presenter') {
+            return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Presenter' . '.php';
+        }
+        if ($this->type == 'Transformer') {
+            return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Transformer' . '.php';
+        }
+        if ($this->type == 'Repository') {
+            return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Repository' . '.php';
+        }
+        if ($this->type == 'Validator') {
+            return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Validator' . '.php';
+        }
         return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '.php';
     }
 

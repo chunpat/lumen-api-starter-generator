@@ -5,28 +5,38 @@ namespace Chunpat\LumenApiStarterGenerator\Console;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
-class ServiceMakeCommand extends GeneratorCommand
+class ValidatorMakeCommand extends GeneratorCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'make:service';
+    protected $name = 'make:validator';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new service';
+    protected $description = 'Create a new validator';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Service';
+    protected $type = 'Validator';
+
+    /**
+     * Execute the console command.
+     *
+     * @return bool|null
+     */
+    public function handle()
+    {
+        parent::handle();
+    }
 
     /**
      * Get the stub file for the generator.
@@ -35,22 +45,7 @@ class ServiceMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        $stub = $this->option('all')
-            ? '/stubs/service.whole.stub'
-            : '/stubs/service.stub';
-
-        return __DIR__ . $stub;
-    }
-
-    /**
-     * Determine if the command is generating a resource collection.
-     *
-     * @return bool
-     */
-    protected function collection()
-    {
-        return $this->option('collection') ||
-               Str::endsWith($this->argument('name'), 'Collection');
+        return __DIR__. '/stubs/validator.whole.stub';
     }
 
     /**
@@ -61,7 +56,7 @@ class ServiceMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Services';
+        return $rootNamespace.'\Repositories\Validators';
     }
 
     /**
@@ -72,7 +67,6 @@ class ServiceMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['all', 'a', InputOption::VALUE_NONE, 'Create a resource collection.'],
         ];
     }
 }

@@ -11,18 +11,18 @@ use Illuminate\Http\Request;
 class DummyClassService
 {
     /**
-     * @var DummyClassRepository|DummyClassRepositoryEloquent
+     * @var DummyClassRepositoryEloquent
      */
     private $DummyLowercaseClassRepository;
 
     /**
      * DummyClassService constructor.
      *
-     * @param DummyClassRepository $DummyLowercaseClassRepository
+     * @param DummyClassRepositoryEloquent $DummyLowercaseClassRepositoryEloquent
      */
-    public function __construct(DummyClassRepository $DummyLowercaseClassRepository)
+    public function __construct(DummyClassRepositoryEloquent $DummyLowercaseClassRepositoryEloquent)
     {
-        $this->DummyLowercaseClassRepository = $DummyLowercaseClassRepository;
+        $this->DummyLowercaseClassRepository = $DummyLowercaseClassRepositoryEloquent;
     }
 
     /**
@@ -53,7 +53,8 @@ class DummyClassService
     /**
      * @param Request $request
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function handleStore(Request $request)
     {
@@ -64,7 +65,8 @@ class DummyClassService
     /**
      * @param Request $request
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function handleUpdate(Request $request)
     {

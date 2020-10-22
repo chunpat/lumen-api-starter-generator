@@ -35,33 +35,42 @@ class ModelMakeCommand extends GeneratorCommand
      */
     public function handle()
     {
-        if (parent::handle() === false && ! $this->option('force')) {
-            return false;
-        }
-
         if ($this->option('all')) {
-            $this->input->setOption('factory', true);
-            $this->input->setOption('seed', true);
-            $this->input->setOption('migration', true);
             $this->input->setOption('controller', true);
+            $this->input->setOption('service', true);
             $this->input->setOption('resource', true);
+            $this->input->setOption('criteria', true);
+            $this->input->setOption('presenter', true);
+            $this->input->setOption('eloquent', true);
+            $this->input->setOption('repositories', true);
+            $this->input->setOption('transformer', true);
+            $this->input->setOption('validator', true);
         }
 
-        if ($this->option('factory')) {
-            $this->createFactory();
-        }
-
-        if ($this->option('migration')) {
-            $this->createMigration();
-        }
-
-        if ($this->option('seed')) {
-            $this->createSeeder();
-        }
-
-        if ($this->option('controller') || $this->option('resource') || $this->option('api')) {
+        if ($this->option('controller')) {
             $this->createController();
+            $this->createService();
+            $this->createResource();
         }
+
+        if ($this->option('service')) {
+            $this->createCriteria();
+            $this->createPresenter();
+            $this->createEloquent();
+        }
+
+        if($this->option('eloquent')){
+            $this->createRepository();
+            $this->createValidator();
+        }
+
+        if($this->option('transformer')){
+            $this->createTransformer();
+        }
+
+        $this->createMigration();
+
+        parent::handle();
     }
 
     /**
@@ -72,10 +81,6 @@ class ModelMakeCommand extends GeneratorCommand
     protected function createFactory()
     {
         $factory = Str::studly(class_basename($this->argument('name')));
-        var_dump('fac');
-        var_dump($factory);
-        $factory = Str::snake(class_basename($this->argument('name')));
-        var_dump($factory);
         $this->call('make:factory', [
             'name' => "{$factory}Factory",
             '--model' => $this->qualifyClass($this->getNameInput()),
@@ -90,10 +95,6 @@ class ModelMakeCommand extends GeneratorCommand
     protected function createMigration()
     {
         $table = Str::snake(Str::pluralStudly(class_basename($this->argument('name'))));
-
-        if ($this->option('pivot')) {
-            $table = Str::singular($table);
-        }
 
         $this->call('make:migration', [
             'name' => "create_{$table}_table",
@@ -127,9 +128,138 @@ class ModelMakeCommand extends GeneratorCommand
         $modelName = $this->qualifyClass($this->getNameInput());
 
         $this->call('make:controller', array_filter([
-            'name'  => "{$controller}Controller",
-            '--model' => $this->option('resource') || $this->option('api') ? $modelName : null,
-            '--api' => $this->option('api'),
+            'name' => "{$controller}",
+            '-a' => $this->option('controller'),
+        ]));
+    }
+
+    /**
+     * Create a service for the controller.
+     *
+     * @return void
+     */
+    protected function createService()
+    {
+        $service = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:service', array_filter([
+            'name' => "{$service}",
+            '-a' => $this->option('service'),
+        ]));
+    }
+
+    /**
+     * Create a controller for the controller.
+     *
+     * @return void
+     */
+    protected function createResource()
+    {
+        $resource = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:resource', array_filter([
+            'name' => "{$resource}",
+            '-a' => $this->option('resource'),
+        ]));
+    }
+
+    /**
+     * Create a controller for the service.
+     *
+     * @return void
+     */
+    protected function createCriteria()
+    {
+        $criteria = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:criteria', array_filter([
+            'name' => "{$criteria}"
+        ]));
+    }
+
+    /**
+     * Create a controller for the service.
+     *
+     * @return void
+     */
+    protected function createPresenter()
+    {
+        $presenter = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:presenter', array_filter([
+            'name' => "{$presenter}"
+        ]));
+    }
+
+    /**
+     * Create a controller for the service.
+     *
+     * @return void
+     */
+    protected function createEloquent()
+    {
+        $eloquent = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:eloquent', array_filter([
+            'name' => "{$eloquent}"
+        ]));
+    }
+
+    /**
+     * Create a controller for the eloquent.
+     *
+     * @return void
+     */
+    protected function createRepository()
+    {
+        $eloquent = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:repositories', array_filter([
+            'name' => "{$eloquent}"
+        ]));
+    }
+
+    /**
+     * Create a controller for the presenter.
+     *
+     * @return void
+     */
+    protected function createTransformer()
+    {
+        $transformer = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:transformer', array_filter([
+            'name' => "{$transformer}"
+        ]));
+    }
+
+    /**
+     * Create a controller for the eloquent.
+     *
+     * @return void
+     */
+    protected function createValidator()
+    {
+        $validator = Str::studly(class_basename($this->argument('name')));
+
+        $modelName = $this->qualifyClass($this->getNameInput());
+
+        $this->call('make:validator', array_filter([
+            'name' => "{$validator}"
         ]));
     }
 
@@ -140,8 +270,8 @@ class ModelMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        $stub = $this->option('pivot')
-            ? '/stubs/model.pivot.stub'
+        $stub = $this->option('all')
+            ? '/stubs/model.whole.stub'
             : '/stubs/model.stub';
 
         return __DIR__ . $stub;
@@ -168,14 +298,15 @@ class ModelMakeCommand extends GeneratorCommand
     {
         return [
             ['all', 'a', InputOption::VALUE_NONE, 'Generate a migration, seeder, factory, and resource controller for the model'],
-            ['controller', 'c', InputOption::VALUE_NONE, 'Create a new controller for the model'],
-            ['factory', 'f', InputOption::VALUE_NONE, 'Create a new factory for the model'],
-            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists'],
-            ['migration', 'm', InputOption::VALUE_NONE, 'Create a new migration file for the model'],
-            ['seed', 's', InputOption::VALUE_NONE, 'Create a new seeder file for the model'],
-            ['pivot', 'p', InputOption::VALUE_NONE, 'Indicates if the generated model should be a custom intermediate table model'],
-            ['resource', 'r', InputOption::VALUE_NONE, 'Indicates if the generated controller should be a resource controller'],
-            ['api', null, InputOption::VALUE_NONE, 'Indicates if the generated controller should be an API controller'],
+            ['controller', 'co', InputOption::VALUE_NONE, 'Generate a controller, service, resource'],
+            ['service', 's', InputOption::VALUE_NONE, 'Generate a service,resource,criteria,presenter,eloquent'],
+            ['resource', 'res', InputOption::VALUE_NONE, 'Generate a resource'],
+            ['criteria', 'cr', InputOption::VALUE_NONE, 'Generate a criteria'],
+            ['presenter', 'p', InputOption::VALUE_NONE, 'Generate a presenter'],
+            ['eloquent', 'e', InputOption::VALUE_NONE, 'Generate a eloquent'],
+            ['repositories', 'rep', InputOption::VALUE_NONE, 'Generate a repository'],
+            ['transformer', 't', InputOption::VALUE_NONE, 'Generate a transformer'],
+            ['validator', 'va', InputOption::VALUE_NONE, 'Generate a validator'],
         ];
     }
 }

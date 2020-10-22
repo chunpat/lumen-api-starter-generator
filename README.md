@@ -9,9 +9,29 @@
 $ composer require chunpat/lumen-api-starter-generator -vvv
 ```
 
+## Configuration
+
+Inside your bootstrap/app.php file, add:
+```
+$app->register(Chunpat\LumenApiStarterGenerator\LumenGeneratorServiceProvider::class);
+```
+
 ## Usage
 
-TODO
+```
+➜  lumen-api-starter git:(feature_generator) ✗php artisan make:model Permission -a
+Controller created successfully.
+Service created successfully.
+Resource created successfully.
+Criteria created successfully.
+Presenter created successfully.
+Eloquent created successfully.
+Repository created successfully.
+Validator created successfully.
+Transformer created successfully.
+Created Migration: 2020_10_22_035537_create_permissions_table
+Model created successfully.
+```
 
 ## Contributing
 
@@ -26,3 +46,7 @@ _The code contribution process is not very formal. You just need to make sure th
 ## License
 
 MIT
+
+## Thank
+1、[GitHub - flipboxstudio/lumen-generator: A Lumen Generator You Are Missing](https://github.com/flipboxstudio/lumen-generator)
+

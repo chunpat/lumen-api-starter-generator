@@ -4,7 +4,7 @@ namespace DummyNamespace;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DummyClass extends JsonResource
+class DummyClassResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

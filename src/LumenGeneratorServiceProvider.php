@@ -37,20 +37,23 @@ class LumenGeneratorServiceProvider extends ServiceProvider
         'ConsoleMake' => 'command.console.make',
         'ControllerMake' => 'command.controller.make',
         'ServiceMake' => 'command.service.make',
+        'CriteriaMake' => 'command.criteria.make',
+        'EloquentMake' => 'command.eloquent.make',
+        'PresenterMake' => 'command.presenter.make',
+        'TransformerMake' => 'command.transformer.make',
+        'RepositoryMake' => 'command.repositories.make',
+        'ResourceMake' => 'command.resource.make',
+        'ModelMake' => 'command.model.make',
+        'ValidatorMake' => 'command.validator.make',
         'EventMake' => 'command.event.make',
         'ExceptionMake' => 'command.exception.make',
         'RequestMake' => 'command.request.make',
         'JobMake' => 'command.job.make',
-        'ListenerMake' => 'command.listener.make',
-        'MailMake' => 'command.mail.make',
-        'MiddlewareMake' => 'command.middleware.make',
         'PipeMake' => 'command.pipe.make',
-        'ModelMake' => 'command.model.make',
         'PolicyMake' => 'command.policy.make',
         'ProviderMake' => 'command.provider.make',
         'Serve' => 'command.serve',
         'TestMake' => 'command.test.make',
-        'ResourceMake' => 'command.resource.make',
         'NotificationMake' => 'command.notification.make',
         'NotificationTable' => 'command.notification.table',
         'ChannelMake' => 'command.channel.make',
@@ -158,6 +161,56 @@ class LumenGeneratorServiceProvider extends ServiceProvider
     /**
      * Register the command.
      */
+    protected function registerCriteriaMakeCommand()
+    {
+        $this->app->singleton('command.criteria.make', function ($app) {
+            return new Console\CriteriaMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     */
+    protected function registerEloquentMakeCommand()
+    {
+        $this->app->singleton('command.eloquent.make', function ($app) {
+            return new Console\EloquentMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     */
+    protected function registerPresenterMakeCommand()
+    {
+        $this->app->singleton('command.presenter.make', function ($app) {
+            return new Console\PresenterMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     */
+    protected function registerTransformerMakeCommand()
+    {
+        $this->app->singleton('command.transformer.make', function ($app) {
+            return new Console\TransformerMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     */
+    protected function registerRepositoryMakeCommand()
+    {
+        $this->app->singleton('command.repositories.make', function ($app) {
+            return new Console\RepositoryMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     */
     protected function registerEventMakeCommand()
     {
         $this->app->singleton('command.event.make', function ($app) {
@@ -202,36 +255,6 @@ class LumenGeneratorServiceProvider extends ServiceProvider
     {
         $this->app->singleton('command.key.generate', function () {
             return new Console\KeyGenerateCommand();
-        });
-    }
-
-    /**
-     * Register the command.
-     */
-    protected function registerListenerMakeCommand()
-    {
-        $this->app->singleton('command.listener.make', function ($app) {
-            return new Console\ListenerMakeCommand($app['files']);
-        });
-    }
-
-    /**
-     * Register the command.
-     */
-    protected function registerMailMakeCommand()
-    {
-        $this->app->singleton('command.mail.make', function ($app) {
-            return new Console\MailMakeCommand($app['files']);
-        });
-    }
-
-    /**
-     * Register the command.
-     */
-    protected function registerMiddlewareMakeCommand()
-    {
-        $this->app->singleton('command.middleware.make', function ($app) {
-            return new Console\MiddlewareMakeCommand($app['files']);
         });
     }
 
@@ -312,6 +335,16 @@ class LumenGeneratorServiceProvider extends ServiceProvider
     {
         $this->app->singleton('command.resource.make', function ($app) {
             return new Console\ResourceMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     */
+    protected function registerValidatorMakeCommand()
+    {
+        $this->app->singleton('command.validator.make', function ($app) {
+            return new Console\ValidatorMakeCommand($app['files']);
         });
     }
 
